@@ -1,3 +1,5 @@
+use std::fmt;
+
 pub enum TaskStatus {
     DONE,
     PENDING
@@ -23,7 +25,7 @@ impl TaskStatus {
 
 
 
-use std::fmt;
+
 
 // The following implements the Display trait for the TaskStatus struct with the following code:
 
