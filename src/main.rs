@@ -6,7 +6,7 @@
 //file in the /to_do/structs directory, which gives us access to base, done, and pending
 //Thus, we are able to use Done and Pending
 
-
+/* 
 mod state;
 mod to_do;
 mod processes;
@@ -35,5 +35,29 @@ fn main() {
     }
     let item = to_do_factory(title, TaskStatus::from_string(status.to_uppercase()));
     process_input(item, command.to_string(), &state);
+}
+*/
+
+
+use actix_web::{web, App, HttpServer, Responder, HttpRequest};
+
+
+
+async fn greet(req: HttpRequest) -> impl Responder {
+    let name = req.match_info().get("name").unwrap_or("World");
+    format!("Hello {}!", name)
+}
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+HttpServer::new(|| {
+    App::new()
+    .route("/", web::get().to(greet))
+    .route("/{name}", web::get().to(greet))
+    .route("/say/hello", web::get().to(|| 
+        async { "Hello Again!" }))
+})
+.bind("127.0.0.1:8080")?
+.run()
+.await
 }
 
