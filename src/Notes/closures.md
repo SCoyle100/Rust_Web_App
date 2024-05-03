@@ -81,6 +81,28 @@ The function add_doubles then adds these results together to get 10.
 The final output printed is 10, which is the result of 4 + 6.
 
 
+
+
+```rust
+
+fn add_doubles(closure: Box<dyn Fn(i32) -> i32>, one: i32, two: i32) -> i32 {
+    return closure(one) + closure(two)
+}
+fn main() {
+    let one = 2;
+    let closure = move |int_input| {
+        return int_input * one
+    };
+    let outcome = add_doubles(Box::new(closure), 2, 3);
+    println!("{}", outcome);
+}
+
+```
+
+Here, we can see that the closure function parameter has the Box<dyn Fn(i32) -> i32> signature. This means that the 'add_doubles' function is accepting closures that have implemented the Fn trait that accepted i32, and returned i32. The Box struct is a smart pointer where we have put the closure on the heap because we do not know the closure’s size at compile time. You can also see that we have utilized move when defining the closure. This is because we are using the one variable, which is outside the closure. The one variable may not live long enough; therefore, the closure takes ownership of it because we used move when defining the closure.
+
+
+
 <u>Key Concepts</u> 
 
 Closures and Functions: In Rust, closures can be passed as arguments to functions if they match the expected function signature. This allows for highly customizable behavior at runtime.
